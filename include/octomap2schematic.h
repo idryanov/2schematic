@@ -1,5 +1,5 @@
-#ifndef OCTOMAP_2_SCHEMATIC_MAIN_H
-#define OCTOMAP_2_SCHEMATIC_MAIN_H
+#ifndef RGBD_2_SCHEMATIC_OCTOMAP_2_SCHEMATIC_H
+#define RGBD_2_SCHEMATIC_OCTOMAP_2_SCHEMATIC_H
 
 #include <iostream>
 #include <string.h>
@@ -10,7 +10,7 @@
 #include <octomap/AbstractOcTree.h>
 
 #include "schematic.h"
-#include "converter.h"
+#include "octomap_converter.h"
 #include "writer.h"
 
-#endif // OCTOMAP_2_SCHEMATIC_MAIN_H
+#endif // RGBD_2_SCHEMATIC_OCTOMAP_2_SCHEMATIC_H

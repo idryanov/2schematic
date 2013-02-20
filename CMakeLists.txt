@@ -15,12 +15,20 @@ link_libraries(${OCTOMAP_LIBRARIES})
 
 include_directories(include)
 
-add_executable(octomap2schematic
-  src/main.cpp
-  src/converter.cpp
-  src/writer.cpp
-)
+# create rgbd2schematic library
 
-target_link_libraries(octomap2schematic z)
+add_library(rgbd2schematic
+  src/converter.cpp
+  src/octomap_converter.cpp
+  src/writer.cpp)
+
+target_link_libraries(rgbd2schematic z)
+  
+# create octomap2schematic executable  
+  
+add_executable(octomap2schematic
+  src/octomap2schematic.cpp)
+
+target_link_libraries(octomap2schematic rgbd2schematic)
 
 

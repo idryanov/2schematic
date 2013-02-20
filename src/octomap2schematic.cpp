@@ -1,4 +1,4 @@
-#include "main.h"
+#include "octomap2schematic.h"
 
 using namespace std;
 
@@ -32,17 +32,18 @@ int main(int argc, char** argv)
   } 
   
   // convert octree
-  Schematic schematic;
+  rgbd_2_schematic::Schematic schematic;
   
-  Converter converter;
+  rgbd_2_schematic::OctomapConverter converter;
   converter.setTree(tree);
   converter.convert(schematic);
   converter.filter(schematic);
   
   // wrtie out
-  Writer writer(output_path);
+  rgbd_2_schematic::Writer writer(output_path);
   writer.write(schematic);
 
   return 0;
 }
+
 

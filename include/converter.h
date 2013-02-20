@@ -1,12 +1,13 @@
-#ifndef OCTOMAP_2_SCHEMATIC_CONVERTER_H
-#define OCTOMAP_2_SCHEMATIC_CONVERTER_H
+#ifndef RGBD_2_SCHEMATIC_CONVERTER_H
+#define RGBD_2_SCHEMATIC_CONVERTER_H
 
 #include <iostream>
-#include <octomap/octomap.h>
-#include <octomap/ColorOcTree.h>
+#include <math.h>
 
 #include "schematic.h"
 #include "colors.h"
+
+namespace rgbd_2_schematic {
 
 class Converter
 { 
@@ -14,21 +15,11 @@ class Converter
 
     Converter();
 
-    void setTree(octomap::ColorOcTree* tree);
-    bool convert(Schematic& schematic);
+    virtual bool convert(Schematic& schematic) = 0;
+    
     void filter(Schematic& schematic, int window = 1);
     
-  private:
-
-    octomap::ColorOcTree* tree_;
-    
-    // minimum of tree bbx
-    double min_x_, min_y_, min_z_;
-    
-    // tree resolution
-    double res_;
-    
-    int window_;
+  protected:   
     
     int getMaterial(int r, int g, int b);
     int getMaterialNearestRGB(int r, int g, int b);
@@ -38,9 +29,15 @@ class Converter
                  double& h, double& s, double& v);
              
     double colorDiff(const int rgb_A[3], const int rgb_B[3]);
-
+    
+  private:
+   
+    int window_;
+    
     int getMedianColor(const Schematic& schematic, 
                        int x, int y, int z);
 };
 
-#endif // OCTOMAP_2_SCHEMATIC_CONVERTER_H
+} // namespace rgbd_2_schematic
+
+#endif // RGBD_2_SCHEMATIC_CONVERTER_H

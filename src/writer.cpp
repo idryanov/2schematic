@@ -1,5 +1,7 @@
 #include "writer.h"
 
+namespace rgbd_2_schematic {
+
 using namespace std;
 
 Writer::Writer(const std::string& path):
@@ -154,3 +156,4 @@ bool Writer::compressSchematic()
   return true;
 }
 
+} // namespace rgbd_2_schematic

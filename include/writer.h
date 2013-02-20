@@ -1,5 +1,5 @@
-#ifndef OCTOMAP_2_SCHEMATIC_WRITER_H
-#define OCTOMAP_2_SCHEMATIC_WRITER_H
+#ifndef RGBD_2_SCHEMATIC_WRITER_H
+#define RGBD_2_SCHEMATIC_WRITER_H
 
 #define BUFLEN      16384
 
@@ -8,6 +8,8 @@
 #include <zlib.h>
 
 #include "schematic.h"
+
+namespace rgbd_2_schematic {
 
 const char TAG_END        = 0;
 const char TAG_SHORT      = 2;
@@ -37,4 +39,6 @@ class Writer
     void write_schematic_string(const std::string& text);
 };
 
-#endif // OCTOMAP_2_SCHEMATIC_WRITER_H
+} // namespace rgbd_2_schematic
+
+#endif // RGBD_2_SCHEMATIC_WRITER_H
