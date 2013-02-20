@@ -1,5 +1,5 @@
 /**
- *  @file writer.h
+ *  @file pcd_converter.h
  *  @author Ivan Dryanovski <ivan.dryanovski@gmail.com>
  * 
  *  @section LICENSE
@@ -20,47 +20,42 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef RGBD_2_SCHEMATIC_WRITER_H
-#define RGBD_2_SCHEMATIC_WRITER_H
-
-#define BUFLEN      16384
+#ifndef RGBD_2_SCHEMATIC_PCD_CONVERTER_H
+#define RGBD_2_SCHEMATIC_PCD_CONVERTER_H
 
 #include <iostream>
-#include <fstream>
-#include <zlib.h>
+#include <pcl/point_types.h>
+#include <pcl/point_cloud.h>
 
+#include "converter.h"
 #include "schematic.h"
 
 namespace rgbd_2_schematic {
 
-const char TAG_END        = 0;
-const char TAG_SHORT      = 2;
-const char TAG_BYTE_ARRAY = 7;
-const char TAG_STRING     = 8;
-const char TAG_LIST       = 9;
-const char TAG_COMPOUND   = 10;
-
-class Writer
+typedef pcl::PointXYZRGB        PointT;
+typedef pcl::PointCloud<PointT> PointCloudT;
+  
+class PcdConverter: public Converter
 { 
   public:
 
-    Writer(const std::string& path);
+    PcdConverter();
 
-    void write(const Schematic& schematic);              
-         
+    bool load(const std::string& path);
+    void setCloud(PointCloudT::Ptr cloud);
+    bool convert(Schematic& schematic);
+    
   private:
 
-    std::string path_;
-    std::ofstream stream_;
-
-    void writeSchematic(const Schematic& schematic);
-    bool compressSchematic();
+    PointCloudT::Ptr cloud_;
     
-    void write_schematic_short(short value);
-    void write_schematic_int(int value);
-    void write_schematic_string(const std::string& text);
+    // minimum of cloud bbx
+    double min_x_, min_y_, min_z_;
+    
+    // resolution
+    double res_;   
 };
 
 } // namespace rgbd_2_schematic
 
-#endif // RGBD_2_SCHEMATIC_WRITER_H
+#endif // RGBD_2_SCHEMATIC_PCD_CONVERTER_H

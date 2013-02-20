@@ -1,5 +1,5 @@
 /**
- *  @file octomap2schematic.h
+ *  @file pcd2schematic.h
  *  @author Ivan Dryanovski <ivan.dryanovski@gmail.com>
  * 
  *  @section LICENSE
@@ -20,14 +20,14 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef RGBD_2_SCHEMATIC_OCTOMAP_2_SCHEMATIC_H
-#define RGBD_2_SCHEMATIC_OCTOMAP_2_SCHEMATIC_H
+#ifndef RGBD_2_SCHEMATIC_PCD_2_SCHEMATIC_H
+#define RGBD_2_SCHEMATIC_PCD_2_SCHEMATIC_H
 
 #include <iostream>
 #include <string.h>
 
 #include "writer.h"
 #include "schematic.h"
-#include "octomap_converter.h"
+#include "pcd_converter.h"
 
-#endif // RGBD_2_SCHEMATIC_OCTOMAP_2_SCHEMATIC_H
+#endif // RGBD_2_SCHEMATIC_PCD_2_SCHEMATIC_H

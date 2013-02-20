@@ -1,5 +1,5 @@
 /**
- *  @file octomap2schematic.h
+ *  @file pcd_converter.cpp
  *  @author Ivan Dryanovski <ivan.dryanovski@gmail.com>
  * 
  *  @section LICENSE
@@ -20,14 +20,40 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef RGBD_2_SCHEMATIC_OCTOMAP_2_SCHEMATIC_H
-#define RGBD_2_SCHEMATIC_OCTOMAP_2_SCHEMATIC_H
+#include "pcd_converter.h"
 
-#include <iostream>
-#include <string.h>
+namespace rgbd_2_schematic {
 
-#include "writer.h"
-#include "schematic.h"
-#include "octomap_converter.h"
+using namespace std;
 
-#endif // RGBD_2_SCHEMATIC_OCTOMAP_2_SCHEMATIC_H
+PcdConverter::PcdConverter():Converter()
+{
+
+}
+
+bool PcdConverter::load(const std::string& path)
+{
+  
+  
+}
+
+void PcdConverter::setCloud(PointCloudT::Ptr cloud)
+{
+  cloud_ = cloud;
+
+}
+
+bool PcdConverter::convert(Schematic& schematic)
+{
+  if (!cloud_)
+  {
+    cout << "ERROR: cloud is not set" << endl;
+    return false;
+  }
+
+  cout << "Converting PointCloud to schematic..." << endl;
+
+  return true;
+}
+
+} // namespace rgbd_2_schematic

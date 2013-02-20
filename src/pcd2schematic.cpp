@@ -1,5 +1,5 @@
 /**
- *  @file octomap2schematic.h
+ *  @file pcd2schematic.cpp
  *  @author Ivan Dryanovski <ivan.dryanovski@gmail.com>
  * 
  *  @section LICENSE
@@ -20,14 +20,36 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef RGBD_2_SCHEMATIC_OCTOMAP_2_SCHEMATIC_H
-#define RGBD_2_SCHEMATIC_OCTOMAP_2_SCHEMATIC_H
+#include "pcd2schematic.h"
 
-#include <iostream>
-#include <string.h>
+using namespace std;
+using namespace rgbd_2_schematic;
 
-#include "writer.h"
-#include "schematic.h"
-#include "octomap_converter.h"
+int main(int argc, char** argv)
+{
+  // get parameters
+  if (argc != 3)
+  {
+    cout << "ERROR: Usage is " << argv[0]; 
+    cout << " <input.pcd> <output.schematic>" << endl;
+    return -1;
+  }
+  
+  const string input_path  = argv[1];
+  const string output_path = argv[2];
+    
+  // convert octree
+  Schematic schematic; 
+  PcdConverter converter;
+  converter.load(input_path);
+  converter.convert(schematic);
+  converter.filter(schematic);
+  
+  // write out
+  Writer writer(output_path);
+  writer.write(schematic);
 
-#endif // RGBD_2_SCHEMATIC_OCTOMAP_2_SCHEMATIC_H
+  return 0;
+}
+
+

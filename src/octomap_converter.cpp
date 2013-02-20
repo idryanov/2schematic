@@ -1,3 +1,25 @@
+/**
+ *  @file octomap_converter.cpp
+ *  @author Ivan Dryanovski <ivan.dryanovski@gmail.com>
+ * 
+ *  @section LICENSE
+ * 
+ *  Copyright (C) 2013, Ivan Dryanovski
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "octomap_converter.h"
 
 namespace rgbd_2_schematic {
@@ -9,15 +31,39 @@ OctomapConverter::OctomapConverter():Converter()
 
 }
 
-void OctomapConverter::setTree(octomap::ColorOcTree* tree)
+bool OctomapConverter::load(const std::string& path)
 {
-  tree_ = tree;
+  cout << "Opening " << path << "..." << endl;  
+   
+  octomap::AbstractOcTree* atree = octomap::AbstractOcTree::read(path);
+  
+  if (atree && atree->getTreeType() == "ColorOcTree")
+  {
+    tree_ = dynamic_cast<octomap::ColorOcTree*>(atree);
+    initTreeParams();
+    return true;
+  }
+  else
+  {
+    cout << "ERROR: Octree not found, or not ColorOcTree" << endl;
+    return false;
+  } 
+}
 
+void OctomapConverter::initTreeParams()
+{
   // minimum of tree bbx
   tree_->getMetricMin(min_x_, min_y_, min_z_);
 
   // tree resolution
   res_ = tree_->getResolution();
+}
+
+void OctomapConverter::setTree(octomap::ColorOcTree* tree)
+{
+  tree_ = tree;
+
+  initTreeParams();
 }
 
 bool OctomapConverter::convert(Schematic& schematic)
