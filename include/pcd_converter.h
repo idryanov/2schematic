@@ -26,6 +26,8 @@
 #include <iostream>
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
+#include <pcl/io/pcd_io.h>
+#include <pcl/filters/voxel_grid.h>
 
 #include "converter.h"
 #include "schematic.h"

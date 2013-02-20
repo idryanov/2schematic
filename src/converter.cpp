@@ -47,9 +47,12 @@ void Converter::filter(Schematic& schematic, int window)
 
   cout << "Filtering schematic colors (window: " << window_ << ")" << endl;
 
+  // create new data vector and set to 0
   std::vector<unsigned char> data_new;
   data_new.resize(schematic.data.size());
-
+  for (unsigned int idx = 0; data_new.size(); ++idx)   
+    data_new[idx] = 0;     
+  
   int sx = schematic.size_x;
   int sy = schematic.size_y;
   int sz = schematic.size_z;

@@ -1,5 +1,28 @@
-#ifndef OCTOMAP_2_SCHEMATIC_COLORS_H
-#define OCTOMAP_2_SCHEMATIC_COLORS_H
+/**
+ *  @file colors.h
+ *  @author Ivan Dryanovski <ivan.dryanovski@gmail.com>
+ * 
+ *  @section LICENSE
+ * 
+ *  Copyright (C) 2013, Ivan Dryanovski
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+#ifndef RGBD_2_SCHEMATIC_COLORS_H
+#define RGBD_2_SCHEMATIC_COLORS_H
 
 const double SAT_MIN = 0.20;
 const double VAL_MIN = 0.25;
@@ -23,7 +46,7 @@ const int MAT_GREEN       = 13;
 const int MAT_RED         = 14;
 const int MAT_BLACK       = 15;
 
-// rgb values
+// Wool rgb values
 
 const int WHITE[3]      = {222, 222, 222};
 const int ORANGE[3]     = {218, 124, 61};
@@ -42,7 +65,7 @@ const int GREEN[3]      = {71, 87, 48};
 const int RED[3]        = {151, 51, 48};
 const int BLACK[3]      = {21, 21, 21};
 
-// hue values
+// Wool hue values
 
 const int H_PINK       = 344;
 const int H_RED        = 2;       // 13
@@ -57,4 +80,4 @@ const int H_BLUE       = 234;     // 255
 const int H_PURPLE     = 273;     // 285
 const int H_MAGENTA    = 295;     // 320
 
-#endif // OCTOMAP_2_SCHEMATIC_COLORS_H
+#endif // RGBD_2_SCHEMATIC_COLORS_H

@@ -26,15 +26,31 @@ namespace rgbd_2_schematic {
 
 using namespace std;
 
-PcdConverter::PcdConverter():Converter()
+PcdConverter::PcdConverter():Converter(),
+  res_(0.05)
 {
 
 }
 
 bool PcdConverter::load(const std::string& path)
 {
+  cloud_.reset(new PointCloudT());
+ 
+  cout << "Opening " << path << "..." << endl;  
   
-  
+  int load_result = pcl::io::loadPCDFile<PointT> (path, *cloud_);
+
+  if (load_result != -1)
+  {
+    // params?
+    
+    return true;
+  }
+  else
+  {
+    cout << "ERROR: could not load " << path << endl;
+    return false;
+  } 
 }
 
 void PcdConverter::setCloud(PointCloudT::Ptr cloud)
@@ -53,6 +69,61 @@ bool PcdConverter::convert(Schematic& schematic)
 
   cout << "Converting PointCloud to schematic..." << endl;
 
+  // create filtered cloud
+  PointCloudT cloud_f;
+  pcl::VoxelGrid<PointT> vgf;
+  vgf.setInputCloud(cloud_);
+  vgf.setLeafSize(res_, res_, res_);
+  vgf.filter(cloud_f);
+  
+  // calculate size in meters 
+  PointT p_min, p_max;
+  pcl::getMinMax3D (cloud_f, p_min, p_max);
+  
+  double dx = p_max.x - p_min.x;
+  double dy = p_max.y - p_min.y;
+  double dz = p_max.z - p_min.z;  
+      
+  // calculate size in voxel units
+  int sx = (dx / res_) + 1;  
+  int sy = (dy / res_) + 1;  
+  int sz = (dz / res_) + 1;  
+  
+  schematic.size_x = sx;
+  schematic.size_y = sy;
+  schematic.size_z = sz;
+
+  // resize to full 3d scale
+  unsigned int size = sx * sy * sz;
+  schematic.voxels.resize(size);
+  schematic.data.resize(size);
+  
+  // initialize voxels and data to 0     
+  for (unsigned int idx = 0; idx < size; ++idx)
+  {    
+    schematic.voxels[idx] = 0;     
+    schematic.data[idx] = 0;     
+  }
+  
+  for (unsigned int pt_idx = 0; pt_idx < cloud_f.points.size(); ++pt_idx)
+  {
+    const PointT& p = cloud_f.points[pt_idx];
+    
+    // in voxel coords
+    int x = (p.x - p_min.x) / res_;
+    int y = (p.y - p_min.y) / res_;
+    int z = (p.z - p_min.z) / res_;  
+        
+    // the idnex in the voxel grid
+    int idx = z * (sx * sy) + x * sy + y;
+    
+    // set material type: wool
+    schematic.voxels[idx] = 35;
+    
+    // set material data, based on color   
+    schematic.data[idx] = getMaterial(p.r, p.g, p.b); 
+  }
+      
   return true;
 }
 

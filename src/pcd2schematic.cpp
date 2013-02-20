@@ -43,7 +43,7 @@ int main(int argc, char** argv)
   PcdConverter converter;
   converter.load(input_path);
   converter.convert(schematic);
-  converter.filter(schematic);
+  //converter.filter(schematic);
   
   // write out
   Writer writer(output_path);
