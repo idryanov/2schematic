@@ -2,7 +2,7 @@ RGB-D To Schematic
 ===================================
 The closest you can come to destroying your office with a pickaxe (without legal repercussions).
 
-#![Minecraft room](http://robotics.ccny.cuny.edu/blog/images/logosmall.png "Minecraft room")
+#![Minecraft room](https://raw.github.com/idryanov/rgbd2schematic/master/data/images/mcedit.png "Minecraft room")
 
 **rgbd2schematic** is a set of tools for converting colored 3D models of real-world environements 
 into Minecraft .schematic files. The models can be built using an RGB-D camera (such as the Microsfot Kinect) 
