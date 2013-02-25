@@ -32,6 +32,11 @@ PcdConverter::PcdConverter():Converter(),
 
 }
 
+void PcdConverter::setResolution(double resolution)
+{
+  res_ = resolution;
+}
+  
 bool PcdConverter::load(const std::string& path)
 {
   cloud_.reset(new PointCloudT());
@@ -42,8 +47,6 @@ bool PcdConverter::load(const std::string& path)
 
   if (load_result != -1)
   {
-    // params?
-    
     return true;
   }
   else

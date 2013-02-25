@@ -46,6 +46,7 @@ class PcdConverter: public Converter
     bool load(const std::string& path);
     void setCloud(PointCloudT::Ptr cloud);
     bool convert(Schematic& schematic);
+    void setResolution(double resolution);
     
   private:
 
