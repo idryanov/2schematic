@@ -36,7 +36,6 @@ void Writer::write(const Schematic& schematic)
 {
   writeSchematic(schematic);
   compressSchematic();
-  cout << "Done." << endl;
 }
 
 void Writer::writeSchematic(const Schematic& schematic)

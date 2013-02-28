@@ -28,16 +28,17 @@ using namespace rgbd_2_schematic;
 int main(int argc, char** argv)
 {
   // get parameters
-  if (argc != 4)
+  if (argc != 5)
   {
     cout << "ERROR: Usage is " << argv[0]; 
-    cout << " <input.pcd> <output.schematic> <resolution>" << endl;
+    cout << " input.pcd output.schematic resolution filter_window" << endl;
     return -1;
   }
   
   const string input_path  = argv[1];
   const string output_path = argv[2];
   double resolution = atof(argv[3]);
+  int window = atoi(argv[4]);
     
   // convert octree
   Schematic schematic; 
@@ -45,13 +46,13 @@ int main(int argc, char** argv)
   converter.setResolution(resolution);
   converter.load(input_path);
   converter.convert(schematic);
-  //converter.filter(schematic);
+  converter.filter(schematic, window);
   
   // write out
   Writer writer(output_path);
   writer.write(schematic);
 
+  cout << "Done." << endl;
+
   return 0;
 }
-
-

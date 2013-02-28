@@ -49,8 +49,10 @@ void Converter::filter(Schematic& schematic, int window)
 
   // create new data vector and set to 0
   std::vector<unsigned char> data_new;
-  data_new.resize(schematic.data.size());
-  for (unsigned int idx = 0; data_new.size(); ++idx)   
+  int data_size = schematic.data.size();
+   
+  data_new.resize(data_size);
+  for (unsigned int idx = 0; idx < data_new.size(); ++idx)   
     data_new[idx] = 0;     
   
   int sx = schematic.size_x;
@@ -62,7 +64,7 @@ void Converter::filter(Schematic& schematic, int window)
   for (int y = 0; y < sy; ++y)
   {            
     int idx = z * (sx * sy) + x * sy + y;
-    
+        
     if (schematic.voxels[idx] == 0) continue;
     
     data_new[idx] = getMedianColor(schematic, x, y, z);

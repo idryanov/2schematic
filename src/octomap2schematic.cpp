@@ -28,26 +28,29 @@ using namespace rgbd_2_schematic;
 int main(int argc, char** argv)
 {
   // get parameters
-  if (argc != 3)
+  if (argc != 4)
   {
     cout << "ERROR: Usage is " << argv[0]; 
-    cout << " <input.ot> <output.schematic>" << endl;
+    cout << " input.ot output.schematic filter_window" << endl;
     return -1;
   }
   
   const string input_path  = argv[1];
   const string output_path = argv[2];
+  int window = atoi(argv[3]);
     
   // convert octree
   Schematic schematic; 
   OctomapConverter converter;
   converter.load(input_path);
   converter.convert(schematic);
-  converter.filter(schematic);
+  converter.filter(schematic, window);
   
   // write out
   Writer writer(output_path);
   writer.write(schematic);
+
+  cout << "Done." << endl;
 
   return 0;
 }

@@ -7,7 +7,7 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 # Octomap
-find_package(octomap)
+find_package(OCTOMAP)
 
 if (OCTOMAP_FOUND) 
   include_directories(${OCTOMAP_INCLUDE_DIRS})
@@ -47,6 +47,7 @@ if (OCTOMAP_FOUND)
     src/octomap2schematic.cpp)
 
   target_link_libraries(octomap2schematic rgbd2schematic)
+  target_link_libraries(octomap2schematic ${OCTOMAP_LIBRARIES})
 endif (OCTOMAP_FOUND)
   
 ##############################################
