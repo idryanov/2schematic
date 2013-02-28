@@ -1,6 +1,6 @@
 2Schematic
 ===================================
-The closest you can come to destroying your office with a pickaxe (without legal repercussions).
+The closest you can get to destroying your office with a pickaxe (without legal repercussions).
 
 #![Minecraft room](https://raw.github.com/idryanov/2schematic/master/sample/images/mcedit.png "Minecraft room")
 
