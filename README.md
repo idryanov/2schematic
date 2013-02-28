@@ -55,6 +55,7 @@ Set this to a small value (like 1 or 2) to make colors more uniform and remove r
 Setting this to 0 will disable color filtering.
 
 Example:
+
     ./bin/octomap2schematic data/room.ot data/room.schematic 1
     
 ### PCL to schematic: ###
@@ -72,6 +73,7 @@ Set this to a small value (like 1 or 2) to make colors more uniform and remove r
 Setting this to 0 will disable color filtering.
 
 Example    
+
     ./bin/pcd2schematic data/room.pcd data/room.schematic 0.05 1
 
 Acknowledgements
