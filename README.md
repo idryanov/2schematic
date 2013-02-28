@@ -2,7 +2,7 @@
 ===================================
 The closest you can come to destroying your office with a pickaxe (without legal repercussions).
 
-#![Minecraft room](https://raw.github.com/idryanov/2schematic/master/data/images/mcedit.png "Minecraft room")
+#![Minecraft room](https://raw.github.com/idryanov/2schematic/master/sample/images/mcedit.png "Minecraft room")
 
 **2schematic** is a set of tools for converting colored 3D models of real-world environements 
 into Minecraft .schematic files. The models can be built using an RGB-D camera (such as the Microsfot Kinect) 
@@ -57,7 +57,7 @@ Setting this to 0 will disable color filtering.
 Example:
 
     cd 2schematic
-    ./bin/octomap2schematic ./data/room.ot ./data/room.schematic 1
+    ./bin/octomap2schematic ./sample/room.ot ./sample/room.schematic 1
     
 ### PCL to schematic: ###
     
@@ -76,7 +76,7 @@ Setting this to 0 will disable color filtering.
 Example    
 
     cd 2schematic
-    ./bin/pcd2schematic ./data/room.pcd ./data/room.schematic 0.05 1
+    ./bin/pcd2schematic ./sample/room.pcd ./sample/room.schematic 0.05 1
 
 Acknowledgements
 -----------------------------------
