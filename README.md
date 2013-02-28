@@ -56,7 +56,8 @@ Setting this to 0 will disable color filtering.
 
 Example:
 
-    ./bin/octomap2schematic data/room.ot data/room.schematic 1
+    cd 2schamatic
+    ./bin/octomap2schematic ./data/room.ot ./data/room.schematic 1
     
 ### PCL to schematic: ###
     
@@ -74,7 +75,8 @@ Setting this to 0 will disable color filtering.
 
 Example    
 
-    ./bin/pcd2schematic data/room.pcd data/room.schematic 0.05 1
+    cd 2schamatic
+    ./bin/pcd2schematic ./data/room.pcd ./data/room.schematic 0.05 1
 
 Acknowledgements
 -----------------------------------
