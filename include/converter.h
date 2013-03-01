@@ -35,31 +35,52 @@ class Converter
 { 
   public:
 
+    enum MaterialMode {
+      WOOL_HUE_COLOR,
+      WOOL_HEIGHT_COLOR,
+      STONE
+    };
+
     Converter();
 
-    virtual bool convert(Schematic& schematic) = 0;
-    
+    bool convert(Schematic& schematic);
+
     virtual bool load(const std::string& path) = 0;
     
-    void filter(Schematic& schematic, int window = 1);
+    virtual bool convertData(Schematic& schematic) = 0;
     
+    void filter(Schematic& schematic);
+
+    void setMaterialMode(MaterialMode mode);
+    
+    void setColorFilterWindow(int window);
+
   protected:   
     
-    int getMaterial(int r, int g, int b);
-    int getMaterialNearestRGB(int r, int g, int b);
-    int getMaterialNearestHue(int r, int g, int b);
-    
-    void rgb2hsv(int r, int g, int b,
-                 double& h, double& s, double& v);
-             
-    double colorDiff(const int rgb_A[3], const int rgb_B[3]);
-    
+    int getMaterial(const Schematic& schematic, int x, int y, int z) const;
+
+    int getMaterialColor(const Schematic& schematic,
+                         int x, int y, int z,
+                         int r, int g, int b) const;
+
   private:
    
     int window_;
     
+    MaterialMode mode_;
+
     int getMedianColor(const Schematic& schematic, 
                        int x, int y, int z);
+
+    int getMaterialColorByHeight(const Schematic& schematic, int z) const;
+
+    int getMaterialColorNearestRGB(int r, int g, int b) const;
+    int getMaterialColorNearestHue(int r, int g, int b) const;
+
+    void rgb2hsv(int r, int g, int b,
+                 double& h, double& s, double& v) const;
+
+    double colorDiff(const int rgb_A[3], const int rgb_B[3]) const;
 };
 
 } // namespace rgbd_2_schematic

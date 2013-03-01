@@ -40,7 +40,7 @@ class OctomapConverter: public Converter
 
     bool load(const std::string& path);
     void setTree(octomap::ColorOcTree* tree);
-    bool convert(Schematic& schematic);   
+    bool convertData(Schematic& schematic);
     
   private:
 

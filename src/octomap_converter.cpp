@@ -66,7 +66,7 @@ void OctomapConverter::setTree(octomap::ColorOcTree* tree)
   initTreeParams();
 }
 
-bool OctomapConverter::convert(Schematic& schematic)
+bool OctomapConverter::convertData(Schematic& schematic)
 {
   if (!tree_)
   {
@@ -121,10 +121,10 @@ bool OctomapConverter::convert(Schematic& schematic)
       octomap::ColorOcTreeNode::Color color = n->getColor();
         
       // set material type: wool
-      schematic.voxels[idx] = 35;
+      schematic.voxels[idx] = getMaterial(schematic, x, y, z);
       
       // set material data, based on color
-      schematic.data[idx] = getMaterial(color.r, color.g, color.b); 
+      schematic.data[idx] = getMaterialColor(schematic, x, y, z, color.r, color.g, color.b);
     }
   }
   

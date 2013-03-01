@@ -31,20 +31,28 @@ Converter::Converter()
 
 }
 
-int Converter::getMaterial(int r, int g, int b)
+void Converter::setMaterialMode(MaterialMode mode)
 {
-  int mat;
-
-  //mat = getMaterialNearestRGB(r, g, b);
-  mat = getMaterialNearestHue(r, g, b);
-
-  return mat;
+  mode_ = mode;
 }
 
-void Converter::filter(Schematic& schematic, int window)
+void Converter::setColorFilterWindow(int window)
 {
   window_ = window;
+}
 
+bool Converter::convert(Schematic& schematic)
+{
+  bool convert_result = convertData(schematic);
+
+  if (convert_result && mode_ == WOOL_HUE_COLOR && window_ > 0)
+    filter(schematic);
+
+  return convert_result;
+}
+
+void Converter::filter(Schematic& schematic)
+{
   cout << "Filtering schematic colors (window: " << window_ << ")" << endl;
 
   // create new data vector and set to 0
@@ -130,7 +138,60 @@ int Converter::getMedianColor(
     return base_data_idx;
 }
 
-int Converter::getMaterialNearestRGB(int r, int g, int b)
+int Converter::getMaterial(
+  const Schematic& schematic,
+  int x, int y, int z) const
+{
+  int material = 0;
+
+  if (mode_ == WOOL_HUE_COLOR)
+    material = 35; // Wool
+  else if (mode_ == WOOL_HEIGHT_COLOR)
+    material = 35; // Wool
+  else if (mode_ == STONE)
+    material = 0;
+
+  return material;
+}
+
+int Converter::getMaterialColor(
+  const Schematic& schematic,
+  int x, int y, int z,
+  int r, int g, int b) const
+{
+  int material_color;
+
+  if (mode_ == WOOL_HUE_COLOR)
+    material_color = getMaterialColorNearestHue(r, g, b);
+  else if (mode_ == WOOL_HEIGHT_COLOR)
+    material_color = getMaterialColorByHeight(schematic, z);
+  else if (mode_ == STONE)
+    material_color = 0;
+
+  return material_color;
+}
+
+int Converter::getMaterialColorByHeight(const Schematic& schematic, int z) const
+{
+  int color = 0;
+  int h = ((float)z / (float)schematic.size_z) * 11.0;
+
+  if      (h ==  0) color = MAT_BLACK;
+  else if (h ==  1) color = MAT_BROWN;
+  else if (h ==  2) color = MAT_RED;
+  else if (h ==  3) color = MAT_ORANGE;
+  else if (h ==  4) color = MAT_YELLOW;
+  else if (h ==  5) color = MAT_LIME;
+  else if (h ==  6) color = MAT_CYAN;
+  else if (h ==  7) color = MAT_BLUE;
+  else if (h ==  8) color = MAT_LIGHT_BLUE;
+  else if (h ==  9) color = MAT_LIGHT_GRAY;
+  else if (h == 10) color = MAT_WHITE;
+
+  return color;
+}
+
+int Converter::getMaterialColorNearestRGB(int r, int g, int b) const
 {
   int mat;
   const int color[3] = {r, g, b};
@@ -172,7 +233,7 @@ int Converter::getMaterialNearestRGB(int r, int g, int b)
   return mat;
 }
 
-int Converter::getMaterialNearestHue(int r, int g, int b)
+int Converter::getMaterialColorNearestHue(int r, int g, int b) const
 {
   int mat;
   
@@ -229,7 +290,7 @@ int Converter::getMaterialNearestHue(int r, int g, int b)
   return mat;
 }
 
-double Converter::colorDiff(const int rgb_A[3], const int rgb_B[3])
+double Converter::colorDiff(const int rgb_A[3], const int rgb_B[3]) const
 {
   int dr = rgb_A[0] - rgb_B[0];
   int dg = rgb_A[1] - rgb_B[1];
@@ -239,7 +300,7 @@ double Converter::colorDiff(const int rgb_A[3], const int rgb_B[3])
 
 void Converter::rgb2hsv(
   int r, int g, int b,
-  double& h, double& s, double& v)
+  double& h, double& s, double& v) const
 {
   double in_r = r / 255.0;
   double in_g = g / 255.0;

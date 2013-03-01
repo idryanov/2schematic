@@ -43,7 +43,43 @@ bool PcdConverter::load(const std::string& path)
  
   cout << "Opening " << path << "..." << endl;  
   
-  int load_result = pcl::io::loadPCDFile<PointT> (path, *cloud_);
+  int load_result;
+
+  try {
+    load_result = pcl::io::loadPCDFile<PointT> (path, *cloud_);
+  }
+  catch(...)
+  {
+    PointCloud cloud_no_color;
+
+    try {
+      load_result = pcl::io::loadPCDFile<Point> (path, cloud_no_color);
+    }
+    catch(...)
+    {
+      cout << "Could not determine .pcd type" << endl;
+      return false;
+    }
+
+    int size = cloud_no_color.points.size();
+    cloud_->points.resize(size);
+    cloud_->width = size;
+    cloud_->height = 1;
+    for (int i = 0; i < size; ++i)
+    {
+      const Point& p = cloud_no_color.points[i];
+
+      PointT& p_color = cloud_->points[i];
+      p_color.x = p.x;
+      p_color.y = p.y;
+      p_color.z = p.z;
+      p_color.r = 0;
+      p_color.g = 0;
+      p_color.b = 0;
+    }
+
+    cout << size << endl;
+  }
 
   if (load_result != -1)
   {
@@ -62,7 +98,7 @@ void PcdConverter::setCloud(PointCloudT::Ptr cloud)
 
 }
 
-bool PcdConverter::convert(Schematic& schematic)
+bool PcdConverter::convertData(Schematic& schematic)
 {
   if (!cloud_)
   {
@@ -79,6 +115,8 @@ bool PcdConverter::convert(Schematic& schematic)
   vgf.setLeafSize(res_, res_, res_);
   vgf.filter(cloud_f);
   
+  cout << "filtering done" << endl;
+
   // calculate size in meters 
   PointT p_min, p_max;
   pcl::getMinMax3D (cloud_f, p_min, p_max);
@@ -95,6 +133,8 @@ bool PcdConverter::convert(Schematic& schematic)
   schematic.size_x = sx;
   schematic.size_y = sy;
   schematic.size_z = sz;
+
+  cout << "Size: " << sx << " " << sy << " " << sz << endl;
 
   // resize to full 3d scale
   unsigned int size = sx * sy * sz;
@@ -121,10 +161,10 @@ bool PcdConverter::convert(Schematic& schematic)
     int idx = z * (sx * sy) + x * sy + y;
     
     // set material type: wool
-    schematic.voxels[idx] = 35;
+    schematic.voxels[idx] = getMaterial(schematic, x, y, z);
     
     // set material data, based on color   
-    schematic.data[idx] = getMaterial(p.r, p.g, p.b); 
+    schematic.data[idx] = getMaterialColor(schematic, x, y, z, p.r, p.g, p.b);
   }
       
   return true;

@@ -42,9 +42,10 @@ int main(int argc, char** argv)
   // convert octree
   Schematic schematic; 
   OctomapConverter converter;
+  converter.setMaterialMode(Converter::WOOL_HEIGHT_COLOR);
+  converter.setColorFilterWindow(window);
   converter.load(input_path);
   converter.convert(schematic);
-  converter.filter(schematic, window);
   
   // write out
   Writer writer(output_path);

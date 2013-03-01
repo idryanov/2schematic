@@ -34,6 +34,9 @@
 
 namespace rgbd_2_schematic {
 
+typedef pcl::PointXYZ          Point;
+typedef pcl::PointCloud<Point> PointCloud;
+
 typedef pcl::PointXYZRGB        PointT;
 typedef pcl::PointCloud<PointT> PointCloudT;
   
@@ -45,7 +48,7 @@ class PcdConverter: public Converter
 
     bool load(const std::string& path);
     void setCloud(PointCloudT::Ptr cloud);
-    bool convert(Schematic& schematic);
+    bool convertData(Schematic& schematic);
     void setResolution(double resolution);
     
   private:
