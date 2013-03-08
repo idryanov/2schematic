@@ -1,7 +1,8 @@
 /**
  *  @file writer.cpp
  *  @author Ivan Dryanovski <ivan.dryanovski@gmail.com>
- * 
+ *  @thanks Schematic file format code supplied by Patrick Min
+ *
  *  @section LICENSE
  * 
  *  Copyright (C) 2013, Ivan Dryanovski
