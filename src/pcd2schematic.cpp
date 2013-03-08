@@ -28,10 +28,10 @@ using namespace rgbd_2_schematic;
 int main(int argc, char** argv)
 {
   // get parameters
-  if (argc != 5)
+  if (argc != 6)
   {
     cout << "ERROR: Usage is " << argv[0]; 
-    cout << " input.pcd output.schematic resolution filter_window" << endl;
+    cout << " input.pcd output.schematic resolution filter_window mode" << endl;
     return -1;
   }
   
@@ -39,12 +39,13 @@ int main(int argc, char** argv)
   const string output_path = argv[2];
   double resolution = atof(argv[3]);
   int window = atoi(argv[4]);
+  int mode = atoi(argv[5]);
     
   // convert octree
   Schematic schematic; 
   PcdConverter converter;
   converter.setResolution(resolution);
-  converter.setMaterialMode(Converter::WOOL_HEIGHT_COLOR);
+  converter.setMaterialMode(mode);
   converter.setColorFilterWindow(window);
   converter.load(input_path);
   converter.convert(schematic);
