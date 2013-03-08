@@ -44,7 +44,7 @@ Usage
 
 ### Octomap to schematic: ###
 
-    octomap2schematic [file_in] [file_out] [filter_size]
+    octomap2schematic [file_in] [file_out] [filter_size] [material_mode]
     
 Where the arguments are:
 
@@ -53,30 +53,32 @@ Where the arguments are:
  * `filter_size`: The window size, in voxel units, to perform color median filtering. 
 Set this to a small value (like 1 or 2) to make colors more uniform and remove random color blobs.
 Setting this to 0 will disable color filtering.
+ * `material_mode`: 0 for "true" colors, 1 to color blocks by their height, 2 to make everything out of stone.
 
 Example:
 
     cd 2schematic
-    ./bin/octomap2schematic ./sample/room.ot ./sample/room.schematic 1
+    ./bin/octomap2schematic ./sample/room.ot ./sample/room.schematic 1 0
     
 ### PCL to schematic: ###
     
-    pcd2schematic [file_in] [file_out] [resolution] [filter_size]
+    pcd2schematic [file_in] [file_out] [resolution] [filter_size] [material_mode]
     
 Where the arguments are:
 
  * `file_in`: a PCL PointCloud file, (.pcd format), with color.
  * `file_out`: a .schematic file
- * `resolution`: the size, in meters, of each block. For example, 0.05 will 
+ * `resolution`: the size, whatever units the pcd file is in, of each block. For example, if the pcd is in meters, 0.05 will 
 produce one block for each 5cm of real-world space.
  * `filter_size`: The window size, in voxel units, to perform color median filtering. 
 Set this to a small value (like 1 or 2) to make colors more uniform and remove random color blobs.
 Setting this to 0 will disable color filtering.
+ * `material_mode`: 0 for "true" colors, 1 to color blocks by their height, 2 to make everything out of stone.
 
 Example    
 
     cd 2schematic
-    ./bin/pcd2schematic ./sample/room.pcd ./sample/room.schematic 0.05 1
+    ./bin/pcd2schematic ./sample/room.pcd ./sample/room.schematic 0.05 1 0
 
 Acknowledgements
 -----------------------------------
