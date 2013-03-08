@@ -36,9 +36,9 @@ class Converter
   public:
 
     enum MaterialMode {
-      WOOL_HUE_COLOR,
-      WOOL_HEIGHT_COLOR,
-      STONE
+      WOOL_HUE_COLOR = 0,
+      WOOL_HEIGHT_COLOR = 1,
+      STONE = 2
     };
 
     Converter();
@@ -51,7 +51,7 @@ class Converter
     
     void filter(Schematic& schematic);
 
-    void setMaterialMode(MaterialMode mode);
+    void setMaterialMode(int mode);
     
     void setColorFilterWindow(int window);
 

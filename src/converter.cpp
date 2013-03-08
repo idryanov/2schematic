@@ -31,9 +31,9 @@ Converter::Converter()
 
 }
 
-void Converter::setMaterialMode(MaterialMode mode)
+void Converter::setMaterialMode(int mode)
 {
-  mode_ = mode;
+  mode_ = (MaterialMode)mode;
 }
 
 void Converter::setColorFilterWindow(int window)
@@ -70,14 +70,15 @@ void Converter::filter(Schematic& schematic)
   for (int z = 0; z < sz; ++z)    
   for (int x = 0; x < sx; ++x)
   for (int y = 0; y < sy; ++y)
-  {            
+  {             
     int idx = z * (sx * sy) + x * sy + y;
-        
+                
     if (schematic.voxels[idx] == 0) continue;
     
-    data_new[idx] = getMedianColor(schematic, x, y, z);
+    int median_color = getMedianColor(schematic, x, y, z);  
+    data_new[idx] = median_color;
   }
-  
+    
   schematic.data = data_new;
 }
 
@@ -100,9 +101,9 @@ int Converter::getMedianColor(
   int y_max = std::min(y + window_, sy);  
   int z_max = std::min(z + window_, sz);  
   
-  for (unsigned int zz = z_min; zz <= z_max; ++zz)    
-  for (unsigned int xx = x_min; xx <= x_max; ++xx)
-  for (unsigned int yy = y_min; yy <= y_max; ++yy)
+  for (int zz = z_min; zz < z_max; ++zz)    
+  for (int xx = x_min; xx < x_max; ++xx)
+  for (int yy = y_min; yy < y_max; ++yy)
   {    
     int idx = zz * (sx * sy) + xx * sy + yy;
     
@@ -149,7 +150,7 @@ int Converter::getMaterial(
   else if (mode_ == WOOL_HEIGHT_COLOR)
     material = 35; // Wool
   else if (mode_ == STONE)
-    material = 0;
+    material = 1;
 
   return material;
 }

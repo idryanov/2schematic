@@ -115,8 +115,6 @@ bool PcdConverter::convertData(Schematic& schematic)
   vgf.setLeafSize(res_, res_, res_);
   vgf.filter(cloud_f);
   
-  cout << "filtering done" << endl;
-
   // calculate size in meters 
   PointT p_min, p_max;
   pcl::getMinMax3D (cloud_f, p_min, p_max);

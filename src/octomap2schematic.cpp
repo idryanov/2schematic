@@ -28,21 +28,22 @@ using namespace rgbd_2_schematic;
 int main(int argc, char** argv)
 {
   // get parameters
-  if (argc != 4)
+  if (argc != 5)
   {
     cout << "ERROR: Usage is " << argv[0]; 
-    cout << " input.ot output.schematic filter_window" << endl;
+    cout << " input.ot output.schematic filter_window mode" << endl;
     return -1;
   }
   
   const string input_path  = argv[1];
   const string output_path = argv[2];
   int window = atoi(argv[3]);
+  int mode = atoi(argv[4]);
     
   // convert octree
   Schematic schematic; 
   OctomapConverter converter;
-  converter.setMaterialMode(Converter::WOOL_HEIGHT_COLOR);
+  converter.setMaterialMode(mode);
   converter.setColorFilterWindow(window);
   converter.load(input_path);
   converter.convert(schematic);
